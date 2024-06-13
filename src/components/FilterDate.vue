@@ -161,7 +161,8 @@ export default {
 }
 
 .filter-wrapper {
-  margin: 24px;
+  margin-top: 40px;
+  margin-bottom: 20px;
   box-sizing: border-box;
 }
 

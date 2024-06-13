@@ -41,7 +41,7 @@
       <ul class="nav-list">
         <li class="nav-title">Партнерам</li>
         <li class="nav-item">
-          <RouterLink :to="{ name: 'partners' }">Партнерская программа</RouterLink>
+          <RouterLink class="nav-text" :to="{ name: 'partners' }">Партнерская программа</RouterLink>
         </li>
       </ul>
     </nav>
@@ -110,7 +110,7 @@ export default {
 }
 
 .main-nav .nav-list .nav-item a {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .router-link-active,
@@ -172,5 +172,14 @@ export default {
   flex-grow: 1;
   overflow-y: auto;
   box-sizing: border-box;
+
+}
+
+.nav-text {
+  display: inline-block;
+  max-width: 140px;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 </style>

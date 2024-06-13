@@ -1,19 +1,21 @@
 <template>
-  <FilterDate :decrement-date-from="10" @submit="filterUpdated" @clear="filterCleared"></FilterDate>
-  <TableTemplate :table-data="tableDataFilteredPaginated" :table-data-header="tableDataHeader"></TableTemplate>
-  <Paginator :rows="rowsPerPage" :first="first" :total-records="totalRecords" class="my-paginator"
-    @page="updatePage($event)">
-    <template #start="slotProps">
-      Показано {{ slotProps.state.first + 1 }} -
-      <template v-if="(slotProps.state.page + 1) * slotProps.state.rows > totalRecords">
-        {{ totalRecords }}
+  <div class="table-page">
+    <FilterDate :decrement-date-from="10" @submit="filterUpdated" @clear="filterCleared"></FilterDate>
+    <TableTemplate :table-data="tableDataFilteredPaginated" :table-data-header="tableDataHeader"></TableTemplate>
+    <Paginator :rows="rowsPerPage" :first="first" :total-records="totalRecords" class="my-paginator"
+      @page="updatePage($event)">
+      <template #start="slotProps">
+        Показано {{ slotProps.state.first + 1 }} -
+        <template v-if="(slotProps.state.page + 1) * slotProps.state.rows > totalRecords">
+          {{ totalRecords }}
+        </template>
+        <template v-else>
+          {{ (slotProps.state.page + 1) * slotProps.state.rows }}
+        </template>
+        из {{ totalRecords }}
       </template>
-      <template v-else>
-        {{ (slotProps.state.page + 1) * slotProps.state.rows }}
-      </template>
-      из {{ totalRecords }}
-    </template>
-  </Paginator>
+    </Paginator>
+  </div>
 </template>
 
 <script>
@@ -101,6 +103,15 @@ export default {
 
 
 <style>
+.p-paginator {
+  display: flex;
+  justify-content: space-between;
+  width: 94%;
+  bottom: 10px;
+  margin-top: 20px;
+  padding-left: 10px;
+}
+
 .p-paginator .p-paginator-pages .p-paginator-page:not(:first-child) {
   border: 1px solid gray;
   border-radius: 0px;
@@ -112,10 +123,7 @@ export default {
   border: 1px solid gray;
   border-radius: 5px 0 0 5px;
   margin: 0;
-
 }
-
-
 
 .p-paginator .p-paginator-pages .p-paginator-page:last-child {
   border: 1px solid gray;
