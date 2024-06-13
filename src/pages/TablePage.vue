@@ -1,42 +1,16 @@
 <template>
   <FilterDate :decrement-date-from="10" @submit="filterUpdated" @clear="filterCleared"></FilterDate>
-  <table>
-    <thead>
-      <th v-for="(header, index) in tableDataHeader" :key="index">{{ header }}</th>
-    </thead>
-    <tbody>
-      <tr v-for="row in tableData" :key="row.id">
-        <template v-if="row.date_pay >= dateFrom && row.date_pay <= dateTo">
-          <td>{{ row.date_pay.split("-").reverse().join(".") }}</td>
-          <td>{{ row.client }}</td>
-          <td>{{ row.info }}</td>
-          <td v-if="parseFloat(row.skidka.replace('%', '')) == 0.00">-</td>
-          <td v-else>{{ row.skidka }}</td>
-          <td>{{ row.sum }}</td>
-          <td>{{ row.partner_percent }}</td>
-          <td>{{ row.partner_sum }}</td>
-          <td v-if="row.accept == 1"><img class="accept-img" src="./../assets/check.png" alt="OK"></td>
-          <td v-else><img class="accept-img" src="./../assets/x-mark.png"></td>
-        </template>
-      </tr>
-    </tbody>
-
-  </table>
+  <TableTemplate :table-data="tableDataFiltered" :table-data-header="tableDataHeader"></TableTemplate>
 </template>
 
 
 <script>
-import FilterDate from './../components/FilterDate';
-import { tableData } from './../tableData'
-import { tableDataHeader } from './../tableData';
-
-console.log(tableData);
-tableData.forEach((item, i) => {
-  item.id = i + 1;
-});
+import { tableData, tableDataHeader } from './../tableData'
+import TableTemplate from './../components/TableTemplate.vue'
+import FilterDate from '@/components/FilterDate.vue';
 
 export default {
-  components: { FilterDate },
+  components: { TableTemplate, FilterDate },
   data() {
     return {
       dateFrom: "0000-00-00",
@@ -44,12 +18,25 @@ export default {
     }
   },
   computed: {
-    tableData() {
-      return tableData;
-    },
     tableDataHeader() {
       return tableDataHeader;
-    }
+    },
+    tableDataFiltered() {
+      return tableData.map((item) => {
+        for (let key in item) {
+          if (this.isDate(item[key])) {
+            item[key] = new Date(item[key]).toISOString().slice(0, 10);
+            console.log("Before: " + item[key]);
+            if (item[key] <= this.dateFrom || item[key] >= this.dateTo) {
+              break;
+            }
+            // item[key] = item[key].split("-").reverse().join(".");
+
+          }
+          return item;
+        }
+      })
+    },
   },
   methods: {
     filterUpdated(dateFrom, dateTo) {
@@ -61,20 +48,13 @@ export default {
       console.log(dateFrom, dateTo);
       this.dateFrom = dateFrom;
       this.dateTo = new Date().toISOString().slice(0, 10);
-    }
+    },
+    isDate(someDate) {
+      return !isNaN(Date.parse(someDate));
+    },
+
+
   },
 
 }
 </script>
-
-
-<style>
-table {
-  font-size: 14px;
-}
-
-.accept-img {
-  width: 12px;
-  height: 12px;
-}
-</style>
