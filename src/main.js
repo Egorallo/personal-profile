@@ -4,6 +4,8 @@ import { createRouter } from 'vue-router';
 import { createWebHashHistory } from 'vue-router';
 import DefaultPage from './pages/DefaultPage.vue';
 import TablePage from './pages/TablePage.vue';
+import PrimeVue from 'primevue/config';
+import 'primevue/resources/themes/aura-light-green/theme.css';
 
 const routes = [
   { path: '/', component: DefaultPage, name: 'home' },
@@ -19,5 +21,6 @@ const routes = [
 const router = createRouter({ history: createWebHashHistory(), routes });
 
 const app = createApp(App);
-
-app.use(router).mount('#app');
+app.use(router);
+app.use(PrimeVue);
+app.mount('#app');
