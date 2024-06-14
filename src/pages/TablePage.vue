@@ -3,7 +3,7 @@
     <FilterDate :decrement-date-from="10" @submit="filterUpdated" @clear="filterCleared"></FilterDate>
     <TableTemplate :table-data="tableDataFilteredPaginated" :table-data-header="tableDataHeader"></TableTemplate>
     <Paginator :rows="rowsPerPage" :first="first" :total-records="totalRecords" class="my-paginator"
-      :class="!clickedNoPaginate ? '' : 'pagi-hide'" @page="updatePage($event)">
+      :class="!clickedNoPaginate && totalRecords >= rowsPerPage ? '' : 'pagi-hide'" @page="updatePage($event)">
       <template #start="slotProps">
         Показано {{ slotProps.state.first + 1 }} -
         <template v-if="(slotProps.state.page + 1) * slotProps.state.rows > totalRecords">
@@ -13,10 +13,10 @@
           {{ (slotProps.state.page + 1) * slotProps.state.rows }}
         </template>
         из {{ totalRecords }}
-        <template v-if="!clickedNoPaginate">
+        <template v-if="!clickedNoPaginate && totalRecords >= rowsPerPage">
           <button class="btn-show-all" @click="noPaginate">Показать все</button>
         </template>
-        <template v-else>
+        <template v-else-if="clickedNoPaginate && totalRecords <= rowsPerPage">
           <button class="btn-show-all" @click="noPaginate">Уменьшить</button>
         </template>
       </template>
@@ -132,7 +132,6 @@ export default {
   & .p-paginator-pages {
     display: none;
   }
-
 }
 
 .p-paginator {

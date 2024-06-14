@@ -25,10 +25,10 @@
         </div>
       </div>
       <div class="filter-item">
-        <button class="confirm-button" @click="submittedFilter">Filter</button>
+        <button class="confirm-button" @click="submittedFilter">Показать</button>
       </div>
       <div class="filter-item">
-        <button class="clear-button" @click="clearedFilter">Clear</button>
+        <button class="clear-button" @click="clearedFilter">Очистить фильтр</button>
       </div>
     </div>
   </div>
@@ -177,6 +177,8 @@ export default {
 .filter-item {
   margin: 12px;
   box-sizing: border-box;
+  max-width: 200px;
+  width: 100%;
 }
 
 .date-item {
