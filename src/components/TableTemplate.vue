@@ -7,7 +7,12 @@
       <tbody>
         <tr class="data-row" v-for="(row, rowIndex) in tableData" :key="rowIndex">
           <td v-for="(value, index) in row" :key="index">
-            {{ value }}
+            <template v-if="checkFloat(value)">
+              {{ value.toString().replace('.', ',') }}
+            </template>
+            <template v-else>
+              {{ value }}
+            </template>
           </td>
         </tr>
       </tbody>
@@ -16,6 +21,7 @@
 </template>
 
 <script>
+
 
 
 export default {
@@ -29,6 +35,12 @@ export default {
       default: () => []
     }
   },
+  methods: {
+    checkFloat(str) {
+      console.log(!isNaN(parseFloat(str)));
+      return !isNaN(parseFloat(str));
+    }
+  }
 
 }
 </script>

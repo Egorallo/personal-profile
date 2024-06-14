@@ -3,7 +3,7 @@
     <FilterDate :decrement-date-from="10" @submit="filterUpdated" @clear="filterCleared"></FilterDate>
     <TableTemplate :table-data="tableDataFilteredPaginated" :table-data-header="tableDataHeader"></TableTemplate>
     <Paginator :rows="rowsPerPage" :first="first" :total-records="totalRecords" class="my-paginator"
-      @page="updatePage($event)">
+      :class="!clickedNoPaginate ? '' : 'pagi-hide'" @page="updatePage($event)">
       <template #start="slotProps">
         Показано {{ slotProps.state.first + 1 }} -
         <template v-if="(slotProps.state.page + 1) * slotProps.state.rows > totalRecords">
@@ -13,6 +13,12 @@
           {{ (slotProps.state.page + 1) * slotProps.state.rows }}
         </template>
         из {{ totalRecords }}
+        <template v-if="!clickedNoPaginate">
+          <button class="btn-show-all" @click="noPaginate">Показать все</button>
+        </template>
+        <template v-else>
+          <button class="btn-show-all" @click="noPaginate">Уменьшить</button>
+        </template>
       </template>
     </Paginator>
   </div>
@@ -33,6 +39,7 @@ export default {
       rowsPerPage: 5,
       totalRecords: 0,
       first: 0,
+      clickedNoPaginate: false,
     };
   },
   computed: {
@@ -55,7 +62,7 @@ export default {
         .filter((item) => {
           for (let key in item) {
             if (this.isDate(item[key])) {
-              console.log(item[key]);
+              // console.log(item[key]);
               return (
                 item[key] >= this.dateFrom &&
                 item[key] <= this.dateTo &&
@@ -86,8 +93,8 @@ export default {
       this.dateFrom = dateFrom;
       this.dateTo = dateTo;
     },
-    filterCleared(dateFrom, dateTo) {
-      console.log(dateFrom, dateTo);
+    filterCleared(dateFrom) {
+      // console.log(dateFrom, dateTo);
       this.dateFrom = dateFrom;
       this.dateTo = new Date().toISOString().slice(0, 10);
     },
@@ -97,12 +104,37 @@ export default {
     updatePage(event) {
       this.first = event.first;
     },
+    noPaginate() {
+      console.log("clicked paginate" + this.clickedNoPaginate);
+      this.clickedNoPaginate = this.clickedNoPaginate ^ 1;
+      if (this.clickedNoPaginate) {
+        this.rowsPerPage = 10000;
+      } else {
+        this.rowsPerPage = 5;
+      }
+
+    }
   },
 };
 </script>
 
 
 <style>
+.pagi-hide {
+  .p-paginator-prev {
+    display: none;
+  }
+
+  & .p-paginator-next {
+    display: none;
+  }
+
+  & .p-paginator-pages {
+    display: none;
+  }
+
+}
+
 .p-paginator {
   display: flex;
   justify-content: space-between;
@@ -119,16 +151,22 @@ export default {
   margin: 0;
 }
 
+.p-paginator .p-paginator-pages .p-paginator-page:last-child {
+  border: 1px solid gray;
+  border-left: 0;
+  border-radius: 0 5px 5px 0;
+}
+
 .p-paginator .p-paginator-pages .p-paginator-page:first-child {
   border: 1px solid gray;
   border-radius: 5px 0 0 5px;
   margin: 0;
 }
 
-.p-paginator .p-paginator-pages .p-paginator-page:last-child {
+.p-paginator .p-paginator-pages .p-paginator-page:only-child {
   border: 1px solid gray;
-  border-left: 0;
-  border-radius: 0 5px 5px 0;
+  border-radius: 5px;
+  margin: 0;
 }
 
 .p-paginator .p-paginator-prev {
@@ -149,5 +187,20 @@ export default {
 
 .p-paginator .p-paginator-first {
   display: none;
+}
+
+.btn-show-all {
+  margin-left: 12px;
+  margin-right: 12px;
+  color: #1661ad;
+  display: inline;
+  cursor: pointer;
+  text-align: center;
+  outline: none !important;
+  padding: 0;
+  border: 0;
+  font-size: 16px;
+  background: transparent;
+  line-height: 1.2 !important;
 }
 </style>
