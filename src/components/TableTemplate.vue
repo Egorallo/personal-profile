@@ -7,7 +7,7 @@
       <tbody>
         <tr class="data-row" v-for="(row, rowIndex) in tableData" :key="rowIndex">
           <td v-for="(value, index) in row" :key="index">
-            <template v-if="checkFloat(value)">
+            <template v-if="checkFloat(value) && isNaN(Date.parse(value))">
               {{ value.toString().replace('.', ',') }}
             </template>
             <template v-else>
