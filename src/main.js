@@ -4,12 +4,13 @@ import { createRouter } from 'vue-router';
 import { createWebHashHistory } from 'vue-router';
 import DefaultPage from './pages/DefaultPage.vue';
 import PartnersPage from './pages/PartnersPage.vue';
+import InvoicePage from './pages/InvoicePage.vue';
 import PrimeVue from 'primevue/config';
 import 'primevue/resources/themes/aura-light-green/theme.css';
 
 const routes = [
   { path: '/', component: DefaultPage, name: 'home' },
-  { path: '/invoice', name: 'invoice', component: DefaultPage },
+  { path: '/invoice', name: 'invoice', component: InvoicePage },
   { path: '/acts', name: 'acts', component: DefaultPage },
   { path: '/domains', name: 'domains', component: DefaultPage },
   { path: '/hosting', name: 'hosting', component: DefaultPage },

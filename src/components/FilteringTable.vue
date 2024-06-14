@@ -1,26 +1,28 @@
 <template>
   <div class="table-page">
     <FilterDate :decrement-date-from="10" @submit="filterUpdated" @clear="filterCleared"></FilterDate>
-    <TableTemplate :table-data="tableDataFilteredPaginated" :table-data-header="tableDataHeader"></TableTemplate>
-    <Paginator :rows="rowsPerPage" :first="first" :total-records="totalRecords" class="my-paginator"
-      :class="!clickedNoPaginate && totalRecords >= rowsPerPage ? '' : 'pagi-hide'" @page="updatePage($event)">
-      <template #start="slotProps">
-        Показано {{ slotProps.state.first + 1 }} -
-        <template v-if="(slotProps.state.page + 1) * slotProps.state.rows > totalRecords">
-          {{ totalRecords }}
+    <TableTemplate :table-data="tableDataFilteredPaginated" :table-data-header="tableDataHeader">
+      <Paginator :rows="rowsPerPage" :first="first" :total-records="totalRecords" class="my-paginator"
+        :class="!clickedNoPaginate && totalRecords >= rowsPerPage ? '' : 'pagi-hide'" @page="updatePage($event)">
+        <template #start="slotProps">
+          Показано {{ slotProps.state.first + 1 }} -
+          <template v-if="(slotProps.state.page + 1) * slotProps.state.rows > totalRecords">
+            {{ totalRecords }}
+          </template>
+          <template v-else>
+            {{ (slotProps.state.page + 1) * slotProps.state.rows }}
+          </template>
+          из {{ totalRecords }}
+          <template v-if="!clickedNoPaginate && totalRecords >= rowsPerPage">
+            <button class="btn-show-all" @click="noPaginate">Показать все</button>
+          </template>
+          <template v-else-if="clickedNoPaginate && totalRecords <= rowsPerPage">
+            <button class="btn-show-all" @click="noPaginate">Уменьшить</button>
+          </template>
         </template>
-        <template v-else>
-          {{ (slotProps.state.page + 1) * slotProps.state.rows }}
-        </template>
-        из {{ totalRecords }}
-        <template v-if="!clickedNoPaginate && totalRecords >= rowsPerPage">
-          <button class="btn-show-all" @click="noPaginate">Показать все</button>
-        </template>
-        <template v-else-if="clickedNoPaginate && totalRecords <= rowsPerPage">
-          <button class="btn-show-all" @click="noPaginate">Уменьшить</button>
-        </template>
-      </template>
-    </Paginator>
+      </Paginator>
+    </TableTemplate>
+
   </div>
 </template>
 
@@ -154,10 +156,13 @@ export default {
 .p-paginator {
   display: flex;
   justify-content: space-between;
-  width: 94%;
+
   bottom: 10px;
   margin-top: 20px;
   padding-left: 10px;
+  max-width: 1080px;
+  width: auto;
+  table-layout: fixed;
 }
 
 .p-paginator .p-paginator-pages .p-paginator-page:not(:first-child) {

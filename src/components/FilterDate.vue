@@ -132,7 +132,7 @@ export default {
   text-align: center;
   outline: none;
   border: 0;
-  padding: 12px 40px;
+  padding: 12px 50px;
   font-size: 16px;
 }
 
@@ -175,7 +175,7 @@ export default {
 }
 
 .filter-item {
-  margin: 12px;
+  /* margin: 10px; */
   box-sizing: border-box;
   max-width: 200px;
   width: 100%;

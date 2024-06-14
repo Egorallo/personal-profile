@@ -16,7 +16,11 @@
           </td>
         </tr>
       </tbody>
+
     </table>
+    <div class="pagi-container">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -46,6 +50,12 @@ export default {
 </script>
 
 <style>
+.table-container {
+  display: inline-block;
+  overflow-x: auto;
+  margin: auto;
+}
+
 table {
   font-size: 14px;
   margin-top: 20px;
@@ -56,11 +66,6 @@ table {
   border-collapse: collapse;
   border-radius: 10px;
   overflow: hidden;
-}
-
-.table-container {
-  position: relative;
-  overflow-x: scroll;
 }
 
 tr {
@@ -89,5 +94,11 @@ th {
 
 tbody tr:hover {
   background-color: #e6f1f2;
+}
+
+.p-paginator.p-component {
+  padding: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 </style>
