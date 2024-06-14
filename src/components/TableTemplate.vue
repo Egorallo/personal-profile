@@ -50,7 +50,7 @@ table {
   font-size: 14px;
   margin-top: 20px;
   max-width: 1080px;
-  width: 100%;
+  width: auto;
   table-layout: fixed;
   border: 2px solid #ccc;
   border-collapse: collapse;
@@ -71,8 +71,15 @@ th,
 td {
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
-  padding: 10px;
+  padding: 5px;
+  min-width: 85px;
+  max-width: 180px;
+  text-wrap: wrap;
   word-break: break-word;
+}
+
+td {
+  line-height: 21px;
 }
 
 th {
