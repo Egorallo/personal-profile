@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="table-page">
     <FilterDate :decrement-date-from="10" @submit="filterUpdated" @clear="filterCleared"></FilterDate>
     <TableTemplate :table-data="tableDataFilteredPaginated" :table-data-header="tableDataHeader"></TableTemplate>
@@ -202,4 +202,25 @@ export default {
   background: transparent;
   line-height: 1.2 !important;
 }
-</style>
+</style> -->
+
+<template>
+  <FilteringTable :table-data="tableData" :table-data-header="tableDataHeader" :rows-on-page="5"></FilteringTable>
+</template>
+
+
+
+<script>
+import FilteringTable from './../components/FilteringTable.vue'
+import { tableData, tableDataHeader } from '../tableData';
+
+export default {
+  components: { FilteringTable },
+  data() {
+    return {
+      tableData,
+      tableDataHeader
+    }
+  }
+}
+</script>

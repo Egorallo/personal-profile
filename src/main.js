@@ -3,7 +3,7 @@ import App from './App.vue';
 import { createRouter } from 'vue-router';
 import { createWebHashHistory } from 'vue-router';
 import DefaultPage from './pages/DefaultPage.vue';
-import TablePage from './pages/TablePage.vue';
+import PartnersPage from './pages/PartnersPage.vue';
 import PrimeVue from 'primevue/config';
 import 'primevue/resources/themes/aura-light-green/theme.css';
 
@@ -15,7 +15,7 @@ const routes = [
   { path: '/hosting', name: 'hosting', component: DefaultPage },
   { path: '/cloud', name: 'cloud', component: DefaultPage },
   { path: '/support', name: 'support', component: DefaultPage },
-  { path: '/partners', name: 'partners', component: TablePage },
+  { path: '/partners', name: 'partners', component: PartnersPage },
 ];
 
 const router = createRouter({ history: createWebHashHistory(), routes });

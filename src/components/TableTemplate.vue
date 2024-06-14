@@ -60,7 +60,7 @@ table {
 
 .table-container {
   position: relative;
-  overflow: hidden;
+  overflow-x: scroll;
 }
 
 tr {
